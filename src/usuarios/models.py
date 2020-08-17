@@ -26,8 +26,9 @@ class UserProfileManager(BaseUserManager):
         else:
             user.set_unusable_password()
             user.is_active = False
-
+        user.username =email 
         user.email = email
+        user.is_active = True
 
         user.save()
 

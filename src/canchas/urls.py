@@ -15,6 +15,7 @@ from usuarios.views import ClienteProfile
 urlpatterns = [
     path('', login_required(ClienteProfile.as_view()), name='index'),
     path('accounts/login/', auth_views.LoginView.as_view()),
+    path('accounts/logout/', auth_views.LogoutView.as_view()),
     path('accounts/profile/', login_required(ClienteProfile.as_view()), name='account_profile'),
 
     path('reservas/fecha/', login_required(HorarioView.as_view()), name='reserva_fecha'),

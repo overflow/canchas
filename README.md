@@ -9,3 +9,5 @@ docker-compose up -d
 docker exec -i canchas python manage.py create_user EMAIL PASSWORD
 ```
 La aplicación estará disponible en http://localhost:8080
+
+En el directorio kubernetes se encuentra los archivos para ejecutar los servicios en k8s

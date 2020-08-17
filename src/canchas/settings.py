@@ -14,7 +14,7 @@ SECRET_KEY = 'e(14=x@&kn7s9rz!!1c%_yqm0dz8#ci6a8r29*n0e&_h3-6!36'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django']
+ALLOWED_HOSTS = ['canchas']
 
 
 # Application definition

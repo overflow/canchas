@@ -70,7 +70,7 @@ spec:
               name: envs-django
         image: django
         imagePullPolicy: ""
-        name: django
+        name: canchas
         ports:
         - containerPort: 8000
         resources: {}

@@ -7,9 +7,9 @@
 <form method="post">{% csrf_token %}
     <p>¿Seguro deseas eliminar "{{ object }}"?</p>
     {% buttons %}
-    <input type="submit" value="Confirm">
-    <button type="submit" class="btn btn-primary" >
-        Siguiente
+    <a href="{% url 'account_profile' %}" class="btn btn-secondary">Cancelar</a>
+    <button type="submit" class="btn btn-danger" >
+       Confirmar 
     </button>
     {% endbuttons %}
 </form>

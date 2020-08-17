@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ../kompose convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: celery
+  name: celery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: celery
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ../kompose convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: celery
+    spec:
+      containers:
+      - args:
+        - sh
+        - -c
+        - celery worker -A canchas.celery -l INFO
+        env:
+        - name: DEBUG
+          valueFrom:
+            configMapKeyRef:
+              key: DEBUG
+              name: envs-django
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_DB
+              name: envs-postgres
+        - name: POSTGRES_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_HOST
+              name: envs-postgres
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_PASSWORD
+              name: envs-postgres
+        - name: POSTGRES_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_PORT
+              name: envs-postgres
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_USER
+              name: envs-postgres
+        - name: REDIS_BROKER
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_BROKER
+              name: envs-django
+        image: celery
+        imagePullPolicy: ""
+        name: celery
+        resources: {}
+        volumeMounts:
+        - mountPath: /app
+          name: celery-claim0
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: celery-claim0
+        persistentVolumeClaim:
+          claimName: celery-claim0
+status: {}

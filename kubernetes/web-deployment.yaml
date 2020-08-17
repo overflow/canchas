@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ../kompose convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ../kompose convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: web
+    spec:
+      containers:
+      - env:
+        - name: NGINX_HOST
+          value: canchas.local
+        - name: NGINX_PORT
+          value: "80"
+        image: nginx:alpine
+        imagePullPolicy: ""
+        name: web
+        ports:
+        - containerPort: 8000
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d/site.conf
+          name: web-claim0
+          readOnly: true
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: web-claim0
+        persistentVolumeClaim:
+          claimName: web-claim0
+          readOnly: true
+status: {}

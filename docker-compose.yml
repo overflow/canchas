@@ -1,0 +1,33 @@
+version: '3'
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django-dockerfile
+    command: >
+      sh -c "python /app/manage.py makemigrations &&
+             python /app/manage.py migrate &&
+             python /app/manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app
+
+    env_file:
+      - ./envs/django
+      - ./envs/postgres
+
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    container_name: postgres
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    env_file:
+      - ./envs/postgres
+

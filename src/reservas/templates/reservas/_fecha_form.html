@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<h2>
+{{ fecha }} {{ cancha }}
+</h2>
+{% include "reservas/_list_horas.html" %}
+<form action="." method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    {% if object_list %}
+    <a href="{% url 'reserva_completar' %}" class="btn btn-success">Finalizar</a>
+    {% else %}
+        {% if request.user.reserva %}
+            <a href="{% url 'reserva_delete' request.user.reserva.id %}" class="btn btn-secondary">Cancelar</a>
+        {% endif %}
+    {% endif %}
+    <a href="{% url 'account_profile' %}" class="btn btn-secondary">Cerrar</a>
+    <button type="submit" class="btn btn-primary" >
+        Siguiente
+    </button>
+    {% endbuttons %}
+</form>
+
+
+
+{% endblock content %}

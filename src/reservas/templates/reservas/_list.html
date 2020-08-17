@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+<table>
+    <th> Fecha</th><th>Monto total</th>
+{% for reserva in object_list %}
+<tr>
+    <td>
+{{ reserva.fecha }}
+    </td>
+    <td>
+        {{ reserva.monto|intcomma }}
+    </td>
+    <td>
+        <a href="{% url 'reserva_detail' reserva.id %}">Ver</a>
+        {% if reserva.cancelable %}
+        <a href="{% url 'reserva_delete' reserva.id %}">Cancelar</a>
+        {% endif %}
+    </td>
+</tr>
+</tr>
+{% empty %}
+<tr><td>
+No hay reservas 
+</td></tr>
+{% endfor %}
+</table>
+{% if request.user.reserva %}
+<a href="{% url 'reserva_fecha' %}" class="btn btn-primary" role="button">Editar Reserva</a>
+            {% if not request.user.reserva.completada and request.user.reserva.reservado_set.count > 0  %}
+        <a href="#" class="btn btn-success" role="button">Completar</a>
+            {% endif %}
+{% else %}
+<a href="{% url 'reserva_fecha' %}" class="btn btn-primary" role="button">Agregar Reserva</a>
+{% endif %}
+{% endblock content %}

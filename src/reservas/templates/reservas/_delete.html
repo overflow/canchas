@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<h2>
+{{ fecha }} {{ cancha }}
+</h2>
+<form method="post">{% csrf_token %}
+    <p>¿Seguro deseas eliminar "{{ object }}"?</p>
+    {% buttons %}
+    <input type="submit" value="Confirm">
+    <button type="submit" class="btn btn-primary" >
+        Siguiente
+    </button>
+    {% endbuttons %}
+</form>
+{% endblock content %}

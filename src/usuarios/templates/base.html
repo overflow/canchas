@@ -1,0 +1,14 @@
+{% load bootstrap4 %}
+<html>
+    <head>
+        <title>Sistema de manejo de reservas</title>
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{{ form.media }}
+    </head>
+    <body>
+        {% block content %}
+        {% endblock content %}
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<table>
+    {% if object_list %}
+    <tr>
+
+        <th> Cancha </th><th>Horario</th><th>Costo</th>
+    <tr/>
+    {% endif %}
+{% for reserva in object_list %}
+    <tr>
+        <td>
+            {{ reserva.horario.get_cancha_display }}
+        </td>
+        <td>
+            {{ reserva.horario.fecha }} Hasta {{ reserva.horario.finalizacion }}:{{reserva.horario.finalizacion }}
+        </td>
+        <td>
+             {{ reserva.horario.monto }}
+        </td>
+        {% if not reserva.reserva.completada %}
+        <td>
+            <a href="{% url 'horario_delete' reserva.horario.pk %}">Eliminar</a>
+        </td>
+        {% endif %}
+    </tr>
+{% endfor %}
+</table>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<h2>
+{{ fecha }} {{ cancha }}
+</h2>
+{% include "reservas/_list_horas.html" %}
+<form action="." method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <a href="{% url 'reserva_fecha' %}" class="btn btn-secondary">Regresar</a>
+    <button type="submit" class="btn btn-primary" >
+        Siguiente
+    </button>
+    {% endbuttons %}
+</form>
+
+
+
+{% endblock content %}

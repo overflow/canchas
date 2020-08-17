@@ -1,0 +1,54 @@
+from django.contrib.auth import get_user_model
+from django.db import models
+from django.utils import timezone
+
+import datetime
+
+User = get_user_model()
+
+HORAS = ['%s:%s%s' % (h, m, ap) for ap in ('am', 'pm') for h in ([12] + list(range(1,12))) for m in ('00', '30')]
+
+
+class Horario(models.Model):
+                    
+
+    BABY = 'baby'
+    CANCHA_BABY = (BABY, 'Cancha de Baby')
+    GIMNASIO = 'gym'
+    CANCHA_GIMNASIO = (GIMNASIO, 'Cancha de gimnasio')
+    PASTO = 'pasto'
+    CANCHA_PASTO = (PASTO, 'Cancha de Pasto')
+
+    CANCHAS = (
+            CANCHA_PASTO,
+            CANCHA_BABY,
+            CANCHA_GIMNASIO)
+
+    fecha = models.DateTimeField(db_index=True)
+    cancha = models.CharField(max_length=5, choices=CANCHAS, db_index=True)
+    
+    @classmethod
+    def lista_horas_disponibles(self,cancha, dia=timezone.now().day, mes=timezone.now().month, anio=timezone.now().year):
+        """
+        Retorna horas disponibles para la cancha/fecha
+        """
+        no_disponible = Reservados.objects.filter(
+                horario__cancha=cancha,
+                horario__fecha__day=dia,
+                horario__fecha__month=mes,
+                horario__fecha__year=anio).values_list(
+                        'horario__fecha__hour',
+                        'horario__fecha__minute')
+        breakpoint()
+
+
+
+
+class Reserva(models.Model):
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+
+
+class Reservados(models.Model):
+    horario = models.ForeignKey(Horario, on_delete=models.CASCADE)
+    reserva = models.ForeignKey(Reserva, on_delete=models.CASCADE)

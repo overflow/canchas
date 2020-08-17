@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load bootstrap4 humanize %}
+{% block content %}
+<h4>RESERVA Fecha: {{ object.fecha }} Monto a pagar:{{ object.monto|intcomma}}</h4>
+    {% include 'reservas/_list_horas.html' with object_list=object.reservado_set.all %}
+{% buttons %}
+    {% if object.cancelable %}
+<a href="{% url 'reserva_delete' object.id %}" class="btn btn-secondary" >
+  Cancelar
+</a>
+    {% endif %}
+<a href="{% url 'account_profile' %}" class="btn btn-success" >
+  Regresar 
+</a>
+{% endbuttons %}
+
+{% endblock content %}
